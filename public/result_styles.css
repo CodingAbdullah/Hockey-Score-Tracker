@@ -1,0 +1,112 @@
+.heading-section {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.date-heading {
+    text-align: center;
+    padding-top: 25px;
+    margin-right: 75px;
+}
+
+.full-scoreboard-row {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.red {
+    text-align: center;
+}
+
+.blue {
+    text-align: center;
+}
+
+.score-section {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.score {
+    font-size: 80px;
+    padding-right: 65px;
+}
+
+.team-name-heading {
+    padding-top: 20px;
+}
+
+.home-team-section {
+    padding-right: 50px;
+}
+
+.table-section {
+    padding-top: 100px;
+    padding-right: 100px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scoring-heading {
+    padding-bottom: 25px;  
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scoring-play-heading {
+    background-color:black; 
+    color:white; 
+    text-align:center;
+}
+
+.summary-heading {
+    margin-bottom: -75px;
+    margin-top: 75px;
+    text-align: center;
+}
+
+.scoring-description {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.table-hockey-description-heading {
+    text-align: center;
+    padding: 15px;
+}
+
+.table-description-row {
+    padding: 50px;
+}
+
+.scoring-summary {
+    margin-top: 100px;
+}
+
+@media (max-width: 577px) {
+    
+    .away-team-section {
+        padding-top: 50px;
+        padding-right: 50px;
+        padding-bottom: 50px;
+    }
+
+    .home-team-section {
+        padding-top: 50px;
+    }
+    .score {
+        padding-left: 20px;
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 735px) {
+    .score {
+        font-size: 40px;
+        padding-left: 20px;
+    }
+}
