@@ -10,6 +10,12 @@ app.listen(process.env.PORT, () => {
     console.log("Listening to PORT " + process.env.PORT); 
 });
 
+const season = '2019-2020-regular';
+const game = '20200310-TBL-TOR';
+const format = 'json';
+
+const URL = "https://api.mysportsfeeds.com/v2.1/pull/nhl/" + season + "/games/" + game + "/boxscore." + format;
+
 const options = {
     method: 'GET',
     headers : {
@@ -23,16 +29,10 @@ const options = {
     httpsAgent : new https.Agent({ rejectUnauthorized: false })
 }
 
-const season = '2019-2020-regular';
-const game = '20200310-TBL-TOR';
-const format = 'json';
-
-const URL = "https://api.mysportsfeeds.com/v2.1/pull/nhl/" + season + "/games/" + game + "/boxscore." + format;
-
 axios.get(URL, options)
 .then(res => {
     const { data } = res;
-    console.log(data);
+    console.log(res);
 })
 .catch(err => {
     console.log(err);

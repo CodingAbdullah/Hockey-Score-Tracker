@@ -10,10 +10,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/info">
-              <About />
+              <GameForm />
             </Route>
           </Switch>
         </Router>

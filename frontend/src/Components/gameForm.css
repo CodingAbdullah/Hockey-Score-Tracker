@@ -1,3 +1,27 @@
 .formLabel {
     padding-right: 2.5rem;
 }
+
+.gameForm {
+    background-color: lightgray;
+    padding-top: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 2.5rem;
+    padding-left: 2.5rem;
+
+    margin-left: 25%;
+    margin-top: 2.5rem;
+    margin-right: 25%;
+    margin-bottom: 2.5rem;
+}
+
+.formComponent {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.gameSelectionTitle {
+    padding-bottom: 1.5rem;
+}
