@@ -18,7 +18,7 @@ exports.formController = (req, res) => {
                 // ALERT
                 // ALERT
                 // AUTHENTICATION can be found at www.mysportsfeed.com. YOU MUST subscribe and purchase 2.x versions in order to make this app work.
-            "Authorization":"Basic " + btoa(process.env.API_KEY + ":" + process.env.API_PASSWORD)
+            "Authorization": "Basic " + btoa(process.env.API_KEY + ":" + process.env.API_PASSWORD)
         },
         httpsAgent : new https.Agent({ rejectUnauthorized: false })
     }
@@ -26,7 +26,12 @@ exports.formController = (req, res) => {
     axios.get(URL, options)
     .then(res => {
         const { data } = res;
-        console.log(data);
+        console.log(data.stats.home.teamStats);
+
+        // game
+        // scoring
+        // stats
+
     })
     .catch(err => {
         console.log(err);
