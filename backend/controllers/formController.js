@@ -3,7 +3,7 @@ const axios = require("axios");
 const btoa = require("btoa");
 const https = require("https");
 
-exports.formController = (req, res) => {
+exports.formController = async (req, res) => {
     const { season, seasonDate, awayTeam, seasonType, homeTeam } = req.body;
     const game = seasonDate + "-" + awayTeam + "-" + homeTeam;
     const format = 'json';
@@ -23,17 +23,9 @@ exports.formController = (req, res) => {
         httpsAgent : new https.Agent({ rejectUnauthorized: false })
     }
 
-    axios.get(URL, options)
-    .then(res => {
-        const { data } = res;
-        console.log(data.stats.home.teamStats);
+    const value = await axios.get(URL, options);
 
-        // game
-        // scoring
-        // stats
-
+    res.json({
+        data: value
     })
-    .catch(err => {
-        console.log(err);
-    });
 }
