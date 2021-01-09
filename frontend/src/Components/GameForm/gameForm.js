@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import './gameForm.css';
-import gameAction from '../redux/action/gameAction';
+import gameAction from '../../redux/action/gameAction';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class GameForm extends Component {
 
@@ -14,17 +15,18 @@ class GameForm extends Component {
             seasonType: 'regular',
             seasonDate: '',
             awayTeam: '',
-            homeTeam: '',
-            data: ''       
+            homeTeam: ''
         }
     }
 
     formHandler = () => {
         const season = this.state.season;
-        const seasonDate =  this.state.seasonDate.split("-")[0] + this.state.seasonDate.split("-")[1] + this.state.seasonDate.split("-")[2];
+        const seasonDate = this.state.seasonDate.split("-")[0] + this.state.seasonDate.split("-")[1] + this.state.seasonDate.split("-")[2];
         const seasonType = this.state.seasonType;
-        const awayTeam =  this.state.awayTeam;
-        const homeTeam =  this.state.homeTeam;
+        const awayTeam = this.state.awayTeam;
+        const homeTeam = this.state.homeTeam;
+
+        console.log(season + " " + seasonDate + " " + seasonType + " " + awayTeam + " " + homeTeam);
         
         this.props.gameAction(season, seasonDate, seasonType, awayTeam, homeTeam);
 
@@ -67,28 +69,28 @@ class GameForm extends Component {
         return (
             <div className="gameComponent">
                 <form className="gameForm" onSubmit={this.formHandler}>
-                    <h1 class='gameSelectionTitle'>Game Selection</h1>
-                    <label class="formLabel">Date</label>
-                    <input class='formComponent' type="date" name="gameDate"
+                    <h1 className='gameSelectionTitle'>Game Selection</h1>
+                    <label className="formLabel">Date</label>
+                    <input className='formComponent' type="date" name="gameDate"
                             min="2007-01-01" max="2020-12-31" onChange={(e) => {this.setState({seasonDate: e.target.value})}} /><br />
-                    <label class="formLabel">Season Listing</label>
-                    <select name="season" class='formComponent' onChange={(e) => {this.setState({season: e.target.value})}}>
+                    <label className="formLabel">Season Listing</label>
+                    <select name="season" className='formComponent' onChange={(e) => {this.setState({season: e.target.value})}}>
                         {optionMap}
                     </select><br />
-                    <label class="formLabel">Season Type</label>
-                    <select name="seasonType" class='formComponent' onChange={(e) => {this.setState({seasonType: e.target.value})}}>
+                    <label className="formLabel">Season Type</label>
+                    <select name="seasonType" className='formComponent' onChange={(e) => {this.setState({seasonType: e.target.value})}}>
                         <option value="regular">Regular</option>
                         <option value="playoff">Playoffs</option>
                     </select><br />
-                    <label class="formLabel">Away Team</label>
-                    <select name="awayTeam" class='formComponent' onChange={(e) => {this.setState({awayTeam: e.target.value})}}>
+                    <label className="formLabel">Away Team</label>
+                    <select name="awayTeam" className='formComponent' onChange={(e) => {this.setState({awayTeam: e.target.value})}}>
                         {teamMap}
                     </select><br />
-                    <label class="formLabel">Home Team</label>
-                    <select name="homeTeam" class='formComponent' onChange={(e) => {this.setState({homeTeam: e.target.value})}}>
+                    <label className="formLabel">Home Team</label>
+                    <select name="homeTeam" className='formComponent' onChange={(e) => {this.setState({homeTeam: e.target.value})}}>
                         {teamMap}
                     </select><br />
-                    <input class='btn btn-success formComponent' type='submit' name='submit' value='View Results' />
+                    <Link to="/gameSheet"><input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' /></Link>
                 </form>
             </div>
         )

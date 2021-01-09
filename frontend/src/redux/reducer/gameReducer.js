@@ -1,7 +1,7 @@
 import { GAME_DATA, INVALID_DATA } from '../action/types';
 
 const initialState = {
-    data: ''
+    date: ''
 }
 
 const GameReducer = (state = initialState, action) => {
@@ -11,12 +11,14 @@ const GameReducer = (state = initialState, action) => {
         case GAME_DATA:
 
             return {
+                ...state,
                 data: payload
             }
         
         case INVALID_DATA:
 
             return {
+                ...state,
                 data: payload
             }
         
