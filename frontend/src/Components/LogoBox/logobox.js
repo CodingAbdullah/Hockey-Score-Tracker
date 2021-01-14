@@ -29,11 +29,20 @@ import VAN from '../../public/images/nhl_logos/van.gif';
 import VGK from '../../public/images/nhl_logos/vgk.gif';
 import WPJ from '../../public/images/nhl_logos/wpj.gif';
 import WSH from '../../public/images/nhl_logos/wsh.gif';
-
+import '../LogoBox/logobox.css';
 
 const LogoBox = (props) => {
-    const AWAY_LOGO = props.awayTeam.toUpperCase().trim();
-    const HOME_LOGO = props.homeTeam.toUpperCase().trim();
+   const capture = {
+        'ana' : ANA, 'ari' : ARI, 'bos' : BOS, 'buf' : BUF, 'car' : CAR, 'cbj' : CBJ,
+        'cgy' : CGY, 'chi' : CHI, 'col' : COL, 'dal' : DAL, 'det' : DET, 'edm' : EDM,
+        'flo' : FLO, 'lak' : LAK, 'min' : MIN, 'mtl' : MTL, 'njd' : NJD, 'nsh' : NSH,
+        'nyi' : NYI, 'nyr' : NYR, 'ott' : OTT, 'phi' : PHI, 'pit' : PIT, 'sjs' : SJS,
+        'stl' : STL, 'tbl' : TBL, 'tor' : TOR, 'van' : VAN, 'vgk' : VGK, 'wpj' : WPJ,
+        'wsh' : WSH 
+    }
+   
+    const AWAY_LOGO = capture[props.awayTeam.trim()];
+    const HOME_LOGO = capture[props.homeTeam.trim()];
 
     return (
         <div className="logoBox">

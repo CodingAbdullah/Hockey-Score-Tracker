@@ -1,7 +1,7 @@
 import { GAME_DATA, INVALID_DATA } from '../action/types';
 
 const initialState = {
-    date: ''
+    data: ''
 }
 
 const GameReducer = (state = initialState, action) => {

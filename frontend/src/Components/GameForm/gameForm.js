@@ -1,9 +1,8 @@
 import { Component } from 'react';
 import './gameForm.css';
 import gameAction from '../../redux/action/gameAction';
-import Proptypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 class GameForm extends Component {
 
@@ -18,7 +17,7 @@ class GameForm extends Component {
             homeTeam: ''
         }
     }
-
+/*
     formHandler = () => {
         const season = this.state.season;
         const seasonDate = this.state.seasonDate.split("-")[0] + this.state.seasonDate.split("-")[1] + this.state.seasonDate.split("-")[2];
@@ -50,9 +49,9 @@ class GameForm extends Component {
             console.log(err);
         })
         */
-    }
     
-    render = () => {
+    
+    render() {
         const teamList = ['ANA - Anaheim Ducks', 'ARI - Arizona Coyotes', 'BOS - Boston Bruins', 'BUF - Buffalo Sabres', 'CGY - Calgary Flames', 'CAR - Carolina Hurricanes',
         'CBJ - Columbus Blue Jackets', 'CHI - Chicago Blackhawks', 'COL - Colorado Avalanche', 'DAL - Dallas Stars', 'DET - Detroit Red Wings', 'EDM - Edmonton Oilers',
         'FLO - Florida Panthers', 'LAK - Los Angeles Kings', 'MIN - Minnesota Wild', 'MTL - Montreal', 'NJD - New Jersey Devils', 'NSH - Nashville Predators',
@@ -68,7 +67,7 @@ class GameForm extends Component {
 
         return (
             <div className="gameComponent">
-                <form className="gameForm" onSubmit={this.formHandler}>
+                <form className="gameForm">
                     <h1 className='gameSelectionTitle'>Game Selection</h1>
                     <label className="formLabel">Date</label>
                     <input className='formComponent' type="date" name="gameDate"
@@ -90,15 +89,10 @@ class GameForm extends Component {
                     <select name="homeTeam" className='formComponent' onChange={(e) => {this.setState({homeTeam: e.target.value})}}>
                         {teamMap}
                     </select><br />
-                    <Link to="/gameSheet"><input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' /></Link>
+                    <Link to="/gameSheet"><input onClick={() => useDispatch(gameAction(this.state.season, this.state.seasonDate, this.state.seasonType, this.state.awayTeam, this.state.homeTeam))} className='btn btn-success formComponent' type='submit' name='submit' value='View Results' /></Link>
                 </form>
             </div>
         )
     }
 }
-
-GameForm.prototypes = {
-    gameAction: Proptypes.func.isRequired
-}
-
-export default connect(null, { gameAction })( GameForm );
+export default GameForm;

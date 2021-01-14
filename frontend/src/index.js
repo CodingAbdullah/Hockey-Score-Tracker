@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from '../src/redux/store/store';
+import { createStore } from 'redux';
+import rootReducer from '../src/redux/reducer/combineReducer';
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,23 +1,20 @@
-import { Component } from 'react';
 import LogoBox from '../LogoBox/logobox';
+import GameTitle from '../GameTitle/gameTitle';
+import { useSelector } from 'react-redux';
 
-class GameSheet extends Component  {
+import GameTable from '../GameTable/gameTable';
 
-    state = {
+const GameSheet = () => {
+    const homeTeam = useSelector(state => state.data);
+    const awayTeam = useSelector(state => state.data);
 
-    }
-
-    constructor(props){
-        super(props);
-    }
-    
-    render = () => {
         return (
             <div className="gameSheet">
-                <LogoBox awayTeam="" homeTeam="" />
+                <GameTitle />
+                <LogoBox awayTeam={homeTeam} homeTeam={awayTeam} />
+                <GameTable />
             </div>
         )
-    }
 }
 
 export default GameSheet;
