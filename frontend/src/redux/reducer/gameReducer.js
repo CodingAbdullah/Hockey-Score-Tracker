@@ -1,27 +1,25 @@
 import { GAME_DATA, INVALID_DATA } from '../action/types';
 
-const initialState = {
+const intialState = {
     data: ''
 }
 
-const GameReducer = (state = initialState, action) => {
+const GameReducer = (state = intialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
         case GAME_DATA:
-
             return {
                 ...state,
-                data: payload
+                record: payload
             }
         
         case INVALID_DATA:
-
             return {
                 ...state,
-                data: payload
+                record: payload
             }
-        
+
         default:
             return state;
     }

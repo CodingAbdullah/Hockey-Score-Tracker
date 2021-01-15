@@ -1,6 +1,7 @@
+import { GAME_DATA, INVALID_DATA } from '../action/types';
 import axios from "axios";
 
-const GameAction = async (season, seasonDate, seasonType, awayTeam, homeTeam) => {
+const GameAction =  (season, seasonDate, seasonType, awayTeam, homeTeam) => (dispatch) => {
 
     const options = {
         method: 'POST',
@@ -9,21 +10,20 @@ const GameAction = async (season, seasonDate, seasonType, awayTeam, homeTeam) =>
             'content-type': 'application/json'
         }
     };
-
-    const result = await axios.post('http://localhost:5050/form', options);
     
-    if (result !== undefined) {
-        return {
-            type: "INVALID_DATA",
-            payload: result
-        }
-    }
-    else {
-        return {
-            type: "GAME_DATA",
-            payload: result
-        }
-    }
+    axios.post('http://localhost:5050/form', options)
+    .then(response => {
+        dispatch({
+            type: GAME_DATA,
+            payload: response
+        });
+    })
+    .catch(err => {
+        dispatch({
+            type: INVALID_DATA,
+            payload: err
+        });
+    })
 }
 
 export default GameAction;

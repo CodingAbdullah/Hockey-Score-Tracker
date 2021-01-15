@@ -6,12 +6,11 @@ import GameTable from '../GameTable/gameTable';
 
 const GameSheet = () => {
     const homeTeam = useSelector(state => state.data);
-    const awayTeam = useSelector(state => state.data);
 
         return (
             <div className="gameSheet">
+                { homeTeam }
                 <GameTitle />
-                <LogoBox awayTeam={homeTeam} homeTeam={awayTeam} />
                 <GameTable />
             </div>
         )
