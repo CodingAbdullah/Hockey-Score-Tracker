@@ -4,8 +4,8 @@ const btoa = require("btoa");
 const https = require("https");
 
 exports.formController = async (req, res) => {
-    const { season, seasonDate, awayTeam, seasonType, homeTeam } = req.body;
-    const game = seasonDate + "-" + awayTeam + "-" + homeTeam;
+    const { season, sD, awayTeam, seasonType, homeTeam } = req.body;
+    const game = sD + "-" + awayTeam + "-" + homeTeam;
     const format = 'json';
 
     const URL = "https://api.mysportsfeeds.com/v2.1/pull/nhl/" + season + '-' + seasonType + "/games/" + game + "/boxscore." + format;

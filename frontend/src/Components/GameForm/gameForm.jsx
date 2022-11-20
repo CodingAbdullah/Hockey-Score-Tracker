@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
 import { teamList, seasonListings } from '../../Utils/Constants';
 import './gameForm.css';
 
@@ -11,38 +12,38 @@ const GameForm = () => {
     const [awayTeam, updateAwayTeam] = useState('');
     const [homeTeam, updateHomeTeam] = useState('');
 
+    const [result, updateResult] = useState({
+        information: null
+    });
+
     const navigate = useNavigate(); // React-router added here
 
     const optionMap = ( seasonListings.map( season => { return ( <option onClick={ () => { this.setState({ season: season })}} value={ season }>{ season }</option> )}));
     const teamMap = ( teamList.map( team => { return ( <option value={ team.split("-")[0].trim() }>{ team }</option> )}));
 
-
     const formHandler = () => {
+        // Once form is submitted make API call
         let sD = seasonDate.split("-")[0] + seasonDate.split("-")[1] + seasonDate.split("-")[2];
-        console.log(season + " " + sD + " " + seasonType + " " + awayTeam + " " + homeTeam);
-    }
-
-        /*
-            const options = {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {
-                    'content-type': 'application/json'
-                }
+        
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({ season, seasonType, sD, awayTeam, homeTeam }),
+            headers: {
+                'content-type': 'application/json'
             }
+        }
             
-            // Node server will make call to API to fetch and return data
-
-            fetch("http://localhost:5050/form", options)
-            .then(response => response.json())
-            .then(res => {
-                this.state.setState({data: res.references})
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        */
-
+        // Node server will make call to API to fetch and return data
+        axios.post("http://localhost:5050/form", options)
+        .then(response => {
+            updateResult((prevState) => {
+                return {
+                    ...prevState,
+                    information: response.data
+                }
+           });
+        })
+    }
         return (
             <div className="gameComponent">
                 <form className="gameForm" onSubmit={formHandler}>
@@ -67,7 +68,7 @@ const GameForm = () => {
                     <select name="homeTeam" className='formComponent' onChange={(e) => { updateHomeTeam(e.target.value) }}>
                         {teamMap}
                     </select><br />
-                    <input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' onClick={() => navigate('/gameSheet')} />
+                    <input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' />
                 </form>
             </div>
         )

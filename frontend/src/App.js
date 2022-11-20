@@ -8,12 +8,8 @@ const App = () => {
       <div className="App">
           <Router>
             <Routes>
-              <Route exact path="/">  
-                <GameForm />
-              </Route>
-              <Route exact path="/gameSheet">  
-                <GameSheet />
-              </Route>
+              <Route exact path="/" element={<GameForm />}></Route>
+              <Route exact path="/gameSheet" element={<GameSheet />}></Route>
             </Routes>
           </Router>
       </div>
