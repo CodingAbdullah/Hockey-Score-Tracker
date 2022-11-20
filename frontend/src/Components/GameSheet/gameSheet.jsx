@@ -1,4 +1,4 @@
-import GameTitle from '../GameTitle/gameTitle';
+import GameTitle from '../GameTitle/gameTitle.jsx';
 import GameTable from '../GameTable/gameTable';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';

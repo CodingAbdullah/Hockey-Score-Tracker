@@ -36,42 +36,57 @@ const GameForm = () => {
         // Node server will make call to API to fetch and return data
         axios.post("http://localhost:5050/form", options)
         .then(response => {
-            updateResult((prevState) => {
-                return {
-                    ...prevState,
-                    information: response.data
-                }
-           });
+            if (response.status === 200) {
+                updateResult((prevState) => {
+                    return {
+                        ...prevState,
+                        information: response.data
+                    }
+                });
+            }
+            else {
+                updateResult((prevState) => {
+                    return {
+                        ...prevState,
+                        information: null
+                    }
+                });
+            }
         })
     }
-        return (
-            <div className="gameComponent">
-                <form className="gameForm" onSubmit={formHandler}>
-                    <h1 className='gameSelectionTitle'>Game Selection</h1>
-                    <label className="formLabel">Date</label>
-                    <input className='formComponent' type="date" name="gameDate"
-                            min="2007-01-01" max="2020-12-31" onChange={ (e) => { updateSeasonDate(e.target.value) }} /><br />
-                    <label className="formLabel">Season Listing</label>
-                    <select name="season" className='formComponent' onChange={ (e) => { updateSeason(e.target.value) }}>
-                        {optionMap}
-                    </select><br />
-                    <label className="formLabel">Season Type</label>
-                    <select name="seasonType" className='formComponent' onChange={(e) => { updateSeasonType(e.target.value) }}>
-                        <option value="regular">Regular</option>
-                        <option value="playoff">Playoffs</option>
-                    </select><br />
-                    <label className="formLabel">Away Team</label>
-                    <select name="awayTeam" className='formComponent' onChange={(e) => { updateAwayTeam(e.target.value) }}>
-                        {teamMap}
-                    </select><br />
-                    <label className="formLabel">Home Team</label>
-                    <select name="homeTeam" className='formComponent' onChange={(e) => { updateHomeTeam(e.target.value) }}>
-                        {teamMap}
-                    </select><br />
-                    <input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' />
-                </form>
-            </div>
-        )
+        if (result.information !== null) {
+            navigate("/gameSheet");
+        }
+        else {
+            return (
+                <div className="gameComponent">
+                    <form className="gameForm" onSubmit={formHandler}>
+                        <h1 className='gameSelectionTitle'>Game Selection</h1>
+                        <label className="formLabel">Date</label>
+                        <input className='formComponent' type="date" name="gameDate"
+                                min="2007-01-01" max="2020-12-31" onChange={ (e) => { updateSeasonDate(e.target.value) }} /><br />
+                        <label className="formLabel">Season Listing</label>
+                        <select name="season" className='formComponent' onChange={ (e) => { updateSeason(e.target.value) }}>
+                            {optionMap}
+                        </select><br />
+                        <label className="formLabel">Season Type</label>
+                        <select name="seasonType" className='formComponent' onChange={(e) => { updateSeasonType(e.target.value) }}>
+                            <option value="regular">Regular</option>
+                            <option value="playoff">Playoffs</option>
+                        </select><br />
+                        <label className="formLabel">Away Team</label>
+                        <select name="awayTeam" className='formComponent' onChange={(e) => { updateAwayTeam(e.target.value) }}>
+                            {teamMap}
+                        </select><br />
+                        <label className="formLabel">Home Team</label>
+                        <select name="homeTeam" className='formComponent' onChange={(e) => { updateHomeTeam(e.target.value) }}>
+                            {teamMap}
+                        </select><br />
+                        <input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' />
+                    </form>
+                </div>
+            )
+        }
 }
 
 export default GameForm;

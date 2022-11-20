@@ -1,3 +1,5 @@
+import React from 'react';
+
 const GameTitle = () => {
     const awayTeam = "Buffalo Sabres";
     const homeTeam = "Toronto Maple Leafs";

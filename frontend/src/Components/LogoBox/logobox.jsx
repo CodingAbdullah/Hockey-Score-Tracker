@@ -1,3 +1,4 @@
+import React from 'react';
 import ANA from '../../public/images/nhl_logos/ana.gif';
 import ARI from '../../public/images/nhl_logos/ari.gif';
 import BOS from '../../public/images/nhl_logos/bos.gif';

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const GameTable = () => {
     const awayTeam = localStorage.getItem('state');
    // const awayTeam = useSelector(state => data);
