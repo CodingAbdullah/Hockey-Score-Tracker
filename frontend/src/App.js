@@ -1,27 +1,23 @@
 import './App.css';
-import { Component } from 'react';
 import GameForm from '../src/Components/GameForm/gameForm';
 import GameSheet from '../src/Components/GameSheet/gameSheet';
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-class App extends Component {
-
-  render = () => {
+const App = () => {
     return (
       <div className="App">
           <Router>
-            <Switch>
+            <Routes>
               <Route exact path="/">  
                 <GameForm />
               </Route>
               <Route exact path="/gameSheet">  
                 <GameSheet />
               </Route>
-            </Switch>
+            </Routes>
           </Router>
       </div>
     );
-  }
 }
 
 export default App;
