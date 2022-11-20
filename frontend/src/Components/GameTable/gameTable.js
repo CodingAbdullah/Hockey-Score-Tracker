@@ -1,12 +1,10 @@
-import { useSelector } from 'react-redux';
-
 const GameTable = () => {
-    const awayTeam = useSelector(state => state);
-   // const homeTeam = useSelector(state => data);
+    const awayTeam = localStorage.getItem('state');
+   // const awayTeam = useSelector(state => data);
 
     return (
         <div className="gameTable">
-            {awayTeam}
+            { awayTeam }
             <table class="table">
                 <thead>
                     <tr>
