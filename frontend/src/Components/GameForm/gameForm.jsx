@@ -43,6 +43,7 @@ const GameForm = () => {
                         information: response.data
                     }
                 });
+                localStorage.setItem('result', result);
             }
             else {
                 updateResult((prevState) => {
