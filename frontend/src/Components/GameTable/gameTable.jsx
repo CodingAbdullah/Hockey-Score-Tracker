@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const GameTable = () => {
     const awayTeam = localStorage.getItem('awayTeam');
     const homeTeam = localStorage.getItem('homeTeam');
+    const typeOfSeason = localStorage.getItem('season');
     const completeDate = localStorage.getItem('completeDate');
     const awayScore = localStorage.getItem('awayScore');
     const homeScore = localStorage.getItem('homeScore');
@@ -10,38 +12,105 @@ const GameTable = () => {
     const typeOfGoal = localStorage.getItem('playDescriptionRefined');
     const minutes = localStorage.getItem('minutes');
     const seconds = localStorage.getItem('seconds');
+    const session = localStorage.getItem('periods');
+    const periodData = session.map((item, key) => item.key = key).splice(0, 3) // Map key to each session and remove the extra sessions, if any
+    const extraCount = ( session === null || session === undefined ) ? null : session.map((item, key) => item.key = key).splice(3); // Filter OT or SO sessions 
     const totalSecondsElapsed = localStorage.getItem('totalSecondsElasped');
 
+    const navigate = useNavigate(); // Use Navigate hook for navigating to display format of tables
+
+    useEffect(() => {
+        if (awayTeam === undefined || homeTeam === undefined || completeDate === undefined || awayScore === undefined ||
+            playDescriptionRefined === undefined || homeScore === undefined || typeOfGoal === undefined || minutes === undefined ||  
+            seconds === undefined || totalSecondsElapsed === undefined || periodData === undefined) {
+                navigate('/')
+        }
+        else if (awayTeam === null || homeTeam === null || completeDate === null || awayScore === null ||
+            playDescriptionRefined === null || homeScore === null || typeOfGoal === null || minutes === null ||  
+            seconds === null || totalSecondsElapsed === null || periodData === null) {
+                navigate('/')
+        }
+    }, [])
 
     // const awayTeam = useSelector(state => data);
-    return (
-        <div className="gameTable">
-            <div class="col-lg-12">
-                <h1 class="date-heading">{ completeDate }</h1>
-            </div>
-            <div class="row">
-                <div class="red col-lg-4 col-md-4 col-sm-4">
-                    <div class="away-team-section">
-                        <img class="away-image" src="nhl_logos/<%= awayTeamImage %>.gif" height="120" width="165" />
-                        <h4 class="team-name-heading">{ awayTeam }</h4>
+        return (
+            <div className="gameTable">
+                <div class="col-lg-12">
+                    <h1 class="date-heading">{ completeDate }</h1>
+                </div>
+                <div class="row">
+                    <div class="red col-lg-4 col-md-4 col-sm-4">
+                        <div class="away-team-section">
+                            <img class="away-image" src="nhl_logos/<%= awayTeamImage %>.gif" height="120" width="165" />
+                            <h4 class="team-name-heading">{ awayTeam }</h4>
+                        </div>
+                    </div>
+                    <div class="score-section col-lg-4 col-md-4 col-sm-4">
+                        <p class="score">{ awayScore - homeScore }</p> 
+                    </div>
+                    <div class="blue col-lg-4 col-md-4 col-sm-4">
+                        <div class="home-team-section">
+                            <img class="home-image" src="nhl_logos/<%= homeTeamImage %>.gif" height="120" width="165" /> 
+                            <h4 class="team-name-heading">{ homeTeam }</h4>
+                        </div>    
                     </div>
                 </div>
-                <div class="score-section col-lg-4 col-md-4 col-sm-4">
-                    <p class="score">{ awayScore - homeScore }</p> 
-                </div>
-                <div class="blue col-lg-4 col-md-4 col-sm-4">
-                    <div class="home-team-section">
-                        <img class="home-image" src="nhl_logos/<%= homeTeamImage %>.gif" height="120" width="165" /> 
-                        <h4 class="team-name-heading">{ homeTeam }</h4>
-                    </div>    
+                <div class="table-section col-lg-12">
+                    <h3 class="scoring-heading">Scoring</h3>
+                        <table class="table">
+                                <tr style={{ textAlign: 'center' }}>
+                                    <th>Team</th>
+                                    {
+                                        periodData.map(item => {
+                                            return (
+                                                <th>{ item.key }</th>
+                                            )
+                                        })
+                                    }
+                                    {
+                                        extraCount.map(item => {
+                                            if (typeOfSeason === "playoff") {
+                                                return <th>OT {item.key}</th>
+                                            }
+                                            else if (item.key === 1 && typeOfSeason === 'regular') {
+                                                return <th>OT</th>
+                                            }
+                                            else if (item.key === 2 && typeOfSeason === 'regular') {
+                                                return <th>SO</th>
+                                            }
+                                        })
+                                    }
+                                    <th>Final</th>
+                                </tr>
+                                <tr style={{ textAlign: 'center' }}>
+                                    <td style={{ textAlign: 'left' }}>{ awayTeam }</td>
+                                        {
+                                            periodData.map(p => {
+                                                return (
+                                                    <td>{ p.awayScore }</td>
+                                                )
+                                            })
+                                        }
+                                    <td><b>{ awayScore }</b></td>
+                                </tr>
+                                <tr style={{ textAlign: 'center' }}>
+                                    <td style={{ textAlign: 'left' }}>{ homeTeam }</td>
+                                        { 
+                                            periodData.map(p => {
+                                                return (
+                                                    <td>{ p.homeScore }</td>
+                                                )
+                                            })
+                                        }
+                                    <td><b>{ homeScore }</b></td>
+                                </tr>
+                        </table>
                 </div>
             </div>
-        </div>
-    )
+        )
 }
-   /*
 
-
+/*
     <div class="table-section col-lg-12">
             <h3 class="scoring-heading">Scoring</h3>
             <table class="table">
@@ -244,5 +313,4 @@ const GameTable = () => {
 </body>
 </html>
 */
-
 export default GameTable;
