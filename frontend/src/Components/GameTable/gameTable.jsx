@@ -13,9 +13,10 @@ const GameTable = () => {
     let minutes = 0;
     let seconds = 0;
     const session = localStorage.getItem('periods');
+    const extraSession = localStorage.getItem('periods');
     const copySession = localStorage.getItem('periods').map((item, key) => item.key = key);
     const periodData = session.map((item, key) => item.key = key).splice(0, 3) // Map key to each session and remove the extra sessions, if any
-    const extraCount = ( session === null || session === undefined ) ? null : session.map((item, key) => item.key = key).splice(3); // Filter OT or SO sessions 
+    const extraCount = ( session === null || session === undefined ) ? null : extraSession.map((item, key) => item.key = key).splice(3); // Filter OT or SO sessions 
     let totalSecondsElapsed = 0
 
     const navigate = useNavigate(); // Use Navigate hook for navigating to display format of tables
@@ -178,6 +179,78 @@ const GameTable = () => {
                                 }
                             }
                           })  
+                        }
+                        {
+                            extraCount.map(session => {
+                                if (typeOfSeason === 'regular') {
+                                    if (extraCount.length === 1) {
+                                        totalSecondsElapsed = parseInt(extraCount[0].scoringPlays[0].periodSecondsElapsed);
+                                        minutes = Math.floor(parseInt(totalSecondsElapsed)/60);
+                                        seconds = totalSecondsElapsed - minutes*60;
+                                        typeOfGoal = extraCount[0].scoringPlays[0].playDescription.trim().substring(1, 4);
+
+                                        if ((typeOfGoal !== 'PPG') && (typeOfGoal !== 'SHG')) {
+                                            typeOfGoal = "EVEN";
+                                        }
+
+                                        if (seconds < 10){
+                                            seconds = "0" + seconds;
+                                        }
+
+                                        playDescriptionRefined = extraCount[0].scoringPlays[0].playDescription;
+
+                                        if (playDescriptionRefined.trim().substring(0, 11) === '(Empty Net)') {
+                                            playDescriptionRefined = playDescriptionRefined.trim().substring(11);
+                                        }
+
+                                        return (
+                                            <tr class="table-description-row">
+                                                <td>OT</td>
+                                                <td>{ minutes }:{ seconds }</td>
+                                                <td>{ typeOfGoal }</td>
+                                                <td>{ extraCount[0].scoringPlays[0].team.abbreviation } - { playDescriptionRefined }</td>
+                                            </tr>
+                                        )
+                                    }
+                                    else if (extraCount.length === 2) {
+                                        let OT = (
+                                            <tr class="table-description-row">
+                                                    <td>OT</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>No Scoring</td>
+                                            </tr>
+                                        );
+
+                                        let arrayOfPlays = [];
+                                        arrayOfPlays.push(OT); // Add no scoring for return clause
+
+                                        for (var so = 0; so < extraCount[1].scoringPlays.length; so++) {
+                                            playDescriptionRefined = extraCount[1].scoringPlays[so].playDescription;
+
+                                            if (playDescriptionRefined.trim().substring(0, 11) === '(Empty Net)') {
+                                                playDescriptionRefined = playDescriptionRefined.trim().substring(11);
+                                            }
+                                            let play = (
+                                                <tr class="table-description-row">
+                                                    <td>SO</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>{ extraCount[1].scoringPlays[so].team.abbreviation } - { playDescriptionRefined }</td>
+                                                </tr>
+                                            )
+                                            arrayOfPlays.push(play);
+                                        }
+
+                                        // Spread operator to display all extra time content
+                                        return (
+                                            <>
+                                                { ...arrayOfPlays }
+                                            </>
+                                        )
+                                    }
+                                }
+                            })
                         }
                 </div>
             </div>
