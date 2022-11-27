@@ -8,14 +8,15 @@ const GameTable = () => {
     const completeDate = localStorage.getItem('completeDate');
     const awayScore = localStorage.getItem('awayScore');
     const homeScore = localStorage.getItem('homeScore');
-    const playDescriptionRefined = localStorage.getItem('playDescriptionRefined');
-    const typeOfGoal = localStorage.getItem('playDescriptionRefined');
-    const minutes = localStorage.getItem('minutes');
-    const seconds = localStorage.getItem('seconds');
+    let playDescriptionRefined = "";
+    let typeOfGoal = "";
+    let minutes = 0;
+    let seconds = 0;
     const session = localStorage.getItem('periods');
+    const copySession = localStorage.getItem('periods').map((item, key) => item.key = key);
     const periodData = session.map((item, key) => item.key = key).splice(0, 3) // Map key to each session and remove the extra sessions, if any
     const extraCount = ( session === null || session === undefined ) ? null : session.map((item, key) => item.key = key).splice(3); // Filter OT or SO sessions 
-    const totalSecondsElapsed = localStorage.getItem('totalSecondsElasped');
+    let totalSecondsElapsed = 0
 
     const navigate = useNavigate(); // Use Navigate hook for navigating to display format of tables
 
@@ -85,7 +86,7 @@ const GameTable = () => {
                                 <tr style={{ textAlign: 'center' }}>
                                     <td style={{ textAlign: 'left' }}>{ awayTeam }</td>
                                         {
-                                            periodData.map(p => {
+                                            copySession.map(p => {
                                                 return (
                                                     <td>{ p.awayScore }</td>
                                                 )
@@ -96,7 +97,7 @@ const GameTable = () => {
                                 <tr style={{ textAlign: 'center' }}>
                                     <td style={{ textAlign: 'left' }}>{ homeTeam }</td>
                                         { 
-                                            periodData.map(p => {
+                                            copySession.map(p => {
                                                 return (
                                                     <td>{ p.homeScore }</td>
                                                 )
@@ -105,6 +106,79 @@ const GameTable = () => {
                                     <td><b>{ homeScore }</b></td>
                                 </tr>
                         </table>
+                        {
+                          periodData.map(item => {
+                            for (var i = 0; i < item.scoringPlays.length; i++) {
+                                totalSecondsElapsed = parseInt(item.scoringPlays[i].periodSecondsElapsed);
+                                minutes = Math.floor(parseInt(totalSecondsElapsed/60));
+                                seconds = totalSecondsElapsed - minutes*60;
+
+                                if (seconds < 10) {
+                                    seconds = "0" + seconds;
+                                }
+                                
+                                if (item.scoringPlays[i].playDescription.trim().substring(0, 1) === '(') {
+                                    if (item.scoringPlays[i].playDescription.trim().substring(0, 5) === '(PPG)' || item.scoringPlays[i].playDescription.trim().substring(0, 5) === '(SHG)') {
+                                        playDescriptionRefined = item.scoringPlays[i].playDescription.trim().substring(5);
+                                        typeOfGoal = item.scoringPlays[i].playDescription.trim().substring(1, 4);
+
+                                        return (
+                                            <tr className="table-description-row">
+                                                <td>{ i + 1 }</td>
+                                                <td>{ minutes }:{ seconds }</td>
+                                                <td>{ typeOfGoal }</td>
+                                                <td>{ item.scoringPlays[i].team.abbreviation } - { playDescriptionRefined }</td>
+                                            </tr>
+                                        )
+                                    }
+                                    else if ((item.scoringPlays[i].playDescription.trim().substring(0, 11) === "(Empty Net)") && (i == 2) && ( minutes > 17 )) {
+                                        playDescriptionRefined = item.scoringPlays[i].playDescription.trim().substring(11);
+                                        typeOfGoal = item.scoringPlays[i].playDescription.trim().substring(1, 10);
+                                        
+                                        return (
+                                            <tr className="table-description-row"> 
+                                                <td>{ i + 1 }</td>
+                                                <td>{ minutes }:{ seconds }</td>
+                                                <td>{ typeOfGoal.toUpperCase() }</td>
+                                                <td>{ item.scoringPlays[i].team.abbreviation } - { playDescriptionRefined }</td>
+                                            </tr>
+                                        )
+                                    } 
+                                    else {
+                                        playDescriptionRefined = item.scoringPlays[i].playDescription;
+
+                                        if (playDescriptionRefined.trim().substring(0, 11) === "(Empty Net)") {
+                                            playDescriptionRefined = playDescriptionRefined.trim().substring(11);
+                                        }
+
+                                        typeOfGoal = "EVEN";
+
+                                        return (
+                                            <tr class="table-description-row">
+                                                <td>{ i + 1 }</td>
+                                                <td>{ minutes }:{ seconds }</td>
+                                                <td>{ typeOfGoal }</td>
+                                                <td>{ item.scoringPlays[i].team.abbreviation } - { playDescriptionRefined }</td>
+                                            </tr>
+                                        )
+                                    }
+                                }
+                                else {
+                                    playDescriptionRefined = item.scoringPlays[i].playDescription;
+                                    typeOfGoal = "EVEN";
+
+                                    return (
+                                        <tr class="table-description-row">
+                                            <td>{ i + 1 }</td>
+                                            <td>{ minutes }:{ seconds }</td>
+                                            <td>{ typeOfGoal }</td>
+                                            <td>{ item.scoringPlays[i].team.abbreviation } - { playDescriptionRefined }</td>
+                                        </tr>
+                                    )
+                                }
+                            }
+                          })  
+                        }
                 </div>
             </div>
         )
