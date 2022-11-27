@@ -250,6 +250,44 @@ const GameTable = () => {
                                         )
                                     }
                                 }
+                                else {
+                                    if ((typeOfSeason === "playoff") && (extraCount.length > 0)) {
+                                        for (var ot = 3; ot < extraCount.length; ot++) {
+                                            if (extraCount[ot].scoringPlays.length != 0) {
+                                                totalSecondsElapsed = parseInt(extraCount[ot].scoringPlays[0].periodSecondsElapsed);
+                                                minutes = Math.floor(parseInt(totalSecondsElapsed)/60);
+                                                seconds = totalSecondsElapsed - minutes*60;
+                                                typeOfGoal = extraCount[ot].scoringPlays[0].playDescription.trim().substring(1, 4);
+            
+                                                if ((typeOfGoal !== "PPG") && (typeOfGoal !== "SHG")) {
+                                                    typeOfGoal = "EVEN";
+                                                }
+            
+                                                if (seconds < 10) {
+                                                    seconds = "0" + seconds;
+                                                }
+                                                
+                                                playDescriptionRefined = extraCount[ot].scoringPlays[0].playDescription;
+            
+                                                if (playDescriptionRefined.trim().substring(0, 11) === "(Empty Net)") {
+                                                    playDescriptionRefined = playDescriptionRefined.trim().substring(11);
+                                                } 
+                                                else if (playDescriptionRefined.trim().substring(0, 5) === "(PPG)" || playDescriptionRefined.trim().substring(0, 5) === "(SHG)") {
+                                                    playDescriptionRefined = playDescriptionRefined.trim().substring(5);
+                                                }
+
+                                                return (
+                                                    <tr class="table-description-row">
+                                                        <td>OT{ ot - 2 }</td>
+                                                        <td>{ minutes }:{ seconds }</td>
+                                                        <td>{ typeOfGoal }</td>
+                                                        <td>{ extraCount[ot].scoringPlays[0].team.abbreviation } - { playDescriptionRefined }</td>
+                                                    </tr>     
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
                             })
                         }
                 </div>
