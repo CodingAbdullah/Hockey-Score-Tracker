@@ -6,6 +6,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### 'Start here`
+
+NHL score tracker mini lookup app that keeps track of all the scoring history, player stats, season stats (regular/playoff) up to and including the 2007 season.
+
+APIs supported with MySportsFeeds developed by **Brad Barkhouse** (a personal developer who I know).
+As usual, a full stack app that makes use of React and Node as the full stack development framework, which will be 
+hosted and developed both locally and into the cloud using their various services.
+
+More documentation to come as the application develops/transitions from server-side rendering using Node/EJS to a full
+stack application.
+
 ### `npm start`
 
 Runs the app in the development mode.\
