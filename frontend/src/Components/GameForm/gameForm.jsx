@@ -18,7 +18,7 @@ const GameForm = () => {
 
     const navigate = useNavigate(); // React-router added here
 
-    const optionMap = ( seasonListings.map( season => { return ( <option onClick={ () => { this.setState({ season: season })}} value={ season }>{ season }</option> )}));
+    const optionMap = ( seasonListings.map( season => { return ( <option onClick={ () => updateSeason(season) } value={ season }>{ season }</option> )}));
     const teamMap = ( teamList.map( team => { return ( <option value={ team.split("-")[0].trim() }>{ team }</option> )}));
 
     const formHandler = () => {
@@ -68,7 +68,7 @@ const GameForm = () => {
                                 min="2007-01-01" max="2020-12-31" onChange={ (e) => { updateSeasonDate(e.target.value) }} /><br />
                         <label className="formLabel">Season Listing</label>
                         <select name="season" className='formComponent' onChange={ (e) => { updateSeason(e.target.value) }}>
-                            {optionMap}
+                            { optionMap }
                         </select><br />
                         <label className="formLabel">Season Type</label>
                         <select name="seasonType" className='formComponent' onChange={(e) => { updateSeasonType(e.target.value) }}>
@@ -77,11 +77,11 @@ const GameForm = () => {
                         </select><br />
                         <label className="formLabel">Away Team</label>
                         <select name="awayTeam" className='formComponent' onChange={(e) => { updateAwayTeam(e.target.value) }}>
-                            {teamMap}
+                            { teamMap }
                         </select><br />
                         <label className="formLabel">Home Team</label>
                         <select name="homeTeam" className='formComponent' onChange={(e) => { updateHomeTeam(e.target.value) }}>
-                            {teamMap}
+                            { teamMap }
                         </select><br />
                         <input className='btn btn-success formComponent' type='submit' name='submit' value='View Results' />
                     </form>
