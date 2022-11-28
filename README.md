@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### 'Start here`
+### `Start here`
 
 NHL score tracker mini lookup app that keeps track of all the scoring history, player stats, season stats (regular/playoff) up to and including the 2007 season.
 
